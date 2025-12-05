@@ -31,14 +31,51 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts'
+    'accounts',
+    'ckeditor',
 ]
+
+JAZZMIN_SETTINGS = {
+    "site_title": "My Project Admin",
+    "site_header": "My Admin Dashboard",
+    "welcome_sign": "Welcome to My Admin",
+    "copyright": "My Company",
+    "search_model": "auth.User",
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "icons": {
+        "auth.User": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "Accounts.Customer": "fas fa-users",
+        "Accounts.Category": "fas fa-layer-group",
+        "Accounts.Product": "fas fa-boxes",
+        "Accounts.ProductDetail": "fas fa-clipboard-list",
+        "Accounts.ProductDetailImage": "fas fa-image",
+    }
+}
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'all',
+        'skin':'moono',
+        'codeSnippet_theme':'monokai',
+        'extraPlugins':','.join(
+            [
+                'codesnippet',
+                'widget',
+                'dialog'
+            ]
+        )
+    },
+}
 
 
 
