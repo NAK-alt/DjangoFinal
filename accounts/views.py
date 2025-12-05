@@ -1,5 +1,5 @@
 
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 # Create your views here.
 
@@ -47,3 +47,45 @@ def smartphone(request):
 
 def accessories(request):
     return render(request,'electro/accessories.html')
+
+def add_to_cart(request, product_id):
+    cart = request.session.get('cart', {})
+    
+    if str(product_id) in cart:
+        cart[str(product_id)]['quantity'] += 1
+        cart[str(product_id)]['total'] = cart[str(product_id)]['quantity'] * cart[str(product_id)]['price']
+    else:
+        product = product.objects.get(id=product_id)
+        cart[str(product_id)] = {
+            'productName': product.productName,
+            'price': float(product.price),
+            'quantity': 1,
+            'total': float(product.price) * 1,
+            'image': product.productImage.url if product.productImage else ''
+        }
+
+    request.session['cart'] = cart
+    return redirect('view_cart')
+
+def view_cart(request):
+    cart = request.session.get('cart', {})
+    total_price = sum(item['price'] * item['quantity'] for item in cart.values())
+    return render(request, 'Ogani/shoping-cart.html', {'cart': cart, 'total_price': total_price})
+
+def remove_from_cart(request, product_id):
+    cart = request.session.get('cart', {})
+    cart.pop(str(product_id), None)
+    request.session['cart'] = cart
+    return redirect('view_cart')
+
+def checkout_view(request):
+    cart = request.session.get('cart', {})
+    total_price = sum(item['total'] for item in cart.values())
+
+    return render(request, 'Ogani/checkout.html', {
+        'cart': cart,
+        'total_price': total_price,
+    })
+
+
+
