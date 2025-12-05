@@ -19,4 +19,11 @@ urlpatterns = [
     path('cameras/', views.cameras ,name='cameras'),
     path('smartphone/', views.smartphone ,name='smartphone'),
     path('accessories/', views.accessories ,name='accessories'),
+
+    path('add_to_cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
+    path('cart/', views.view_cart, name='view_cart'),
+    path('remove/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),
+    path('checkout_view/', views.checkout_view, name='checkout_view'),
+
+   
 ]
