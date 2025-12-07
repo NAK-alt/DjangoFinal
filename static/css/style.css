@@ -868,10 +868,12 @@ textarea.input {
 
 .product .product-img {
   position: relative;
+  
 }
 
 .product .product-img>img {
   width: 100%;
+  
 }
 
 .product .product-img .product-label {
@@ -1154,53 +1156,107 @@ textarea.input {
 /*----------------------------*\
 	Products slick
 \*----------------------------*/
-
+/* --- Slick Carousel & Tab Base Styles (Copied from your previous code) --- */
 .products-slick .slick-list {
-  padding-bottom: 60px;
-  margin-bottom: -60px;
-  z-index: 2;
+    padding-bottom: 60px;
+    margin-bottom: -60px;
+    z-index: 2;
 }
 
 .products-slick .product.slick-slide {
-  margin: 15px;
+    margin: 15px;
 }
 
-.products-tabs>.tab-pane {
-  display: block;
-  height: 0;
-  opacity: 0;
-  visibility: hidden;
-  overflow-y: hidden;
-  padding-bottom: 60px;
-  margin-bottom: -60px;
+.products-tabs > .tab-pane {
+    display: block;
+    height: 0;
+    opacity: 0;
+    visibility: hidden;
+    overflow-y: hidden;
+    padding-bottom: 60px;
+    margin-bottom: -60px;
 }
 
-.products-tabs>.tab-pane.active {
-  opacity: 1;
-  visibility: visible;
-  height: auto;
+.products-tabs > .tab-pane.active {
+    opacity: 1;
+    visibility: visible;
+    height: auto;
 }
 
 .products-slick-nav {
-  position: absolute;
-  right: 15px;
-  z-index: 10;
+    position: absolute;
+    right: 15px;
+    z-index: 10;
 }
 
 .products-slick-nav .slick-prev, .products-slick-nav .slick-next {
-  position: static;
-  -webkit-transform: none;
-  -ms-transform: none;
-  transform: none;
-  width: 20px;
-  height: 20px;
-  display: inline-block !important;
-  margin: 0px 2px;
+    position: static;
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none;
+    width: 20px;
+    height: 20px;
+    display: inline-block !important;
+    margin: 0px 2px;
 }
 
 .products-slick-nav .slick-prev:before, .products-slick-nav .slick-next:before {
-  font-size: 14px;
+    font-size: 14px;
 }
+
+
+/* --- THE NEW ALIGNMENT FIXES --- */
+
+/* 1. Force the entire product card to be a column-based flex container */
+.products-slick .product {
+    display: flex;
+    flex-direction: column;
+    /* You may need to adjust this value */
+    min-height: 440px; 
+    height: 100%; /* Ensures it fills the container row */
+}
+
+/* 2. Fix the Image height using a known height for consistency */
+.product .product-img {
+    /* Assuming a standard desktop image height for the slider */
+    min-height: 240px; 
+    max-height: 240px;
+    overflow: hidden;
+    display: block;
+}
+
+.product .product-img img {
+    /* Ensure image fills the fixed container without distortion */
+    width: 100%;
+    height: 100%; 
+    object-fit: cover; /* Crops image if needed to fit 240px height */
+}
+
+/* 3. Allow the product body to take up all remaining vertical space */
+.product .product-body {
+    flex-grow: 1;
+    padding-top: 15px;
+    padding-bottom: 5px;
+}
+
+/* 4. Fix the Product Name height (Crucial for 1-line vs 2-line consistency) */
+.product .product-name {
+    min-height: 48px; /* Reserved space for two lines of text */
+    overflow: hidden;
+    margin-bottom: 5px; /* Adjust spacing after the name */
+}
+
+/* 5. Fix the Product Rating height (Ensure rating icons don't wrap/shift) */
+.product .product-rating {
+    min-height: 20px; /* Reserved space for rating stars */
+    line-height: 1;
+}
+
+/* 6. Push the Add-to-Cart button to the very bottom */
+.product .add-to-cart {
+    margin-top: auto; 
+}
+
 
 /*=========================================================
 	07 -> PRODUCTS PAGE

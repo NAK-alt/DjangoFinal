@@ -14,7 +14,25 @@ class Category(models.Model):
     categoryName = models.CharField(max_length=200, null=True)
     categoryImage = models.ImageField(upload_to='images/Categories/',null=True,blank=True)
     def __str__(self):         
-        return self.categoryName
+        return f'{self.id} - {self.categoryName}'
+
+class ImageType(models.Model): 
+    ImageTypeName = models.CharField(max_length=200, null=True) 
+    ImageTypeDate = models.DateTimeField(auto_now_add=True, null=True) 
+    def __str__(self):          
+        return f'{self.id} - {self.ImageTypeName}'
+    
+class Image(models.Model): 
+    ImageName = models.CharField(max_length=200, null=True) 
+    ImageURL = models.ImageField(upload_to='images/',null=True,blank=True) 
+    ImageLink = models.CharField(max_length=200, null=True) 
+    ImageTypeID = models.ForeignKey(ImageType, on_delete=models.CASCADE, null=True) 
+    Active = models.CharField(max_length=200, null=True) 
+    ImageDate = models.DateTimeField(auto_now_add=True, null=True) 
+    def __str__(self):          
+        return f'{self.id} - {self.ImageName}'
+    
+
 class Product(models.Model):
     productName = models.CharField(max_length=200, null=True)
     categoryID = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
@@ -26,7 +44,8 @@ class Product(models.Model):
     productImage = models.ImageField(upload_to='images/Products/',null=True,blank=True)
     productDate = models.DateTimeField(auto_now_add=True, null=True)
     def __str__(self):         
-        return self.productName
+        return f'{self.id} - {self.productName} - {self.categoryID.categoryName}'
+    
 class ProductDetail(models.Model):
     productDetailName = models.CharField(max_length=200, null=True)
     productID = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
@@ -35,11 +54,12 @@ class ProductDetail(models.Model):
     Reviews = RichTextUploadingField(null=True)
     productDetailDate = models.DateTimeField (auto_now_add=True, null=True)
     def __str__(self):         
-        return self.productDetailName
+        return f'{self.id} - {self.productDetailName} - {self.productID.productName}'
+    
 class ProductDetailImage(models.Model):
     productDetailImageName = models.CharField(max_length=200, null=True)
     productID = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
     productDetailImage = models.ImageField(upload_to='images/productDetail/',null=True,blank=True)
     imageDate = models.DateTimeField(auto_now_add=True, null=True)
     def __str__(self):         
-        return self.productDetailImageName
+        return f'{self.id} - {self.productDetailImageName} - {self.productID.productName}'

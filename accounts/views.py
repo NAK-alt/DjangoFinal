@@ -1,6 +1,7 @@
 
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
+from .models import *
 # Create your views here.
 
 def home(request):
@@ -13,13 +14,26 @@ def customer(request):
     return HttpResponse('Customer_page')
 
 def index(request):
-    return render(request,'electro/index.html')
+    ObjDTproduct = Product.objects.all()
+    context = {
+        'ObjDTproduct': ObjDTproduct  # <-- Changed to uppercase 'P'
+    }
+    return render(request,'electro/index.html', context)
 
 def blank(request):
     return render(request,'electro/blank.html')
 
 def product(request):
     return render(request,'electro/product.html')
+
+def productDetail(request, pk):
+    DTProductDetail = Product.objects.get(id=pk)
+    DTProductDetailImage = ProductDetailImage.objects.filter(productID=pk)
+    context = {
+        'ObjDTProductDetail':DTProductDetail,
+        'ObjDTProductDetailImage' :DTProductDetailImage
+    }
+    return render(request, 'electro/productDetail.html',context)
 
 def store(request):
     return render(request,'electro/store.html')

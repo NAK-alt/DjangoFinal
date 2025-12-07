@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+		<title>Electro - HTML Ecommerce Template</title>
+
+ 		<!-- Google font -->
+		{% include 'electro/Head.html'%}
+    </head>
+	<body>
+		<!-- HEADER -->
+		<header>
+			<!-- TOP HEADER -->
+			{% include 'electro/TopHeader.html'%}
+			<!-- /TOP HEADER -->
+
+			<!-- MAIN HEADER -->
+			{% include 'electro/MainHeader.html'%}
+		</header>
+		<!-- /HEADER -->
+
+		<!-- NAVIGATION -->
+		{% include 'electro/Navigation.html'%}
+		<!-- /NAVIGATION -->
+
+		<!-- BREADCRUMB -->
+		{% include 'electro/BREADCRUMB.html'%}
+		<!-- /BREADCRUMB -->
+
+		<!-- SECTION -->
+		{% include 'electro/productSection.html'%}
+		<!-- /Section -->
+
+		<!-- NEWSLETTER -->
+		{% include 'electro/NewsLetter.html'%}
+		<!-- /NEWSLETTER -->
+
+		<!-- FOOTER -->
+		
+		{% include 'electro/Footer.html'%}
+		<!-- /FOOTER -->
+		
+		<!-- jQuery Plugins -->
+		{% include 'electro/jQuery.html'%}
+
+	</body>
+</html>
