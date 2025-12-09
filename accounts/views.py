@@ -27,11 +27,15 @@ def product(request):
     return render(request,'electro/product.html')
 
 def productDetail(request, pk):
+    DTCategory = Category.objects.get(id=pk)
     DTProductDetail = Product.objects.get(id=pk)
     DTProductDetailImage = ProductDetailImage.objects.filter(productID=pk)
+    DTProductDetailInfo = ProductDetail.objects.filter(productID=pk)
     context = {
+        'ObjDTCategory':DTCategory,
         'ObjDTProductDetail':DTProductDetail,
-        'ObjDTProductDetailImage' :DTProductDetailImage
+        'ObjDTProductDetailInfo':DTProductDetailInfo,
+        'ObjDTProductDetailImage' :DTProductDetailImage,
     }
     return render(request, 'electro/productDetail.html',context)
 
