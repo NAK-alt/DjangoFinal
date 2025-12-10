@@ -23,32 +23,43 @@ def index(request):
     }
     return render(request, 'electro/index.html', context)
 
-def laptopSection(request):
-    ObjDTproduct = Product.objects.all()
+def laptop(request):
     ObjDTCategory = Category.objects.all()
+    ObjDTproduct = Product.objects.filter(categoryID__categoryName__iexact='Laptop')
     
     context = {
         'ObjDTproduct': ObjDTproduct,
-        'ObjDTCategory': ObjDTCategory
+        'ObjDTCategory': ObjDTCategory,
     }
     return render(request, 'electro/laptop.html', context)
-
-
-def smartphone_section(request):
-    categories = Category.objects.all()
-    
-    # Get all products
-    products = Product.objects.all()
-    
-    # Top selling products (example: latest 3 products)
-    top_selling_products = Product.objects.order_by('-productDate')[:3]
+def smartphone(request):
+    ObjDTCategory = Category.objects.all()
+    ObjDTproduct = Product.objects.filter(categoryID__categoryName__iexact='smartphone')
     
     context = {
-        'categories': categories,
-        'products': products,
-        'top_selling_products': top_selling_products,
+        'ObjDTproduct': ObjDTproduct,
+        'ObjDTCategory': ObjDTCategory,
     }
     return render(request, 'electro/smartphone.html', context)
+def cameras(request):
+    ObjDTCategory = Category.objects.all()
+    ObjDTproduct = Product.objects.filter(categoryID__categoryName__iexact='camera')
+    
+    context = {
+        'ObjDTproduct': ObjDTproduct,
+        'ObjDTCategory': ObjDTCategory,
+    }
+    return render(request, 'electro/cameras.html', context)
+def accessories(request):
+    ObjDTCategory = Category.objects.all()
+    ObjDTproduct = Product.objects.filter(categoryID__categoryName__iexact='accessories')
+    
+    context = {
+        'ObjDTproduct': ObjDTproduct,
+        'ObjDTCategory': ObjDTCategory,
+    }
+    return render(request, 'electro/accessories.html', context)
+
 # Blank page
 def blank(request):
     return render(request, 'electro/blank.html')
@@ -64,12 +75,22 @@ def productDetail(request, pk):
     DTProductDetail = get_object_or_404(Product, id=pk)
     DTProductDetailImage = ProductDetailImage.objects.filter(productID=pk)
     DTProductDetailInfo = ProductDetail.objects.filter(productID=pk)
-    
+    smartphone_products = Product.objects.filter(categoryID_id=1)
+    laptop_products = Product.objects.filter(categoryID_id=2)
+    camera_products = Product.objects.filter(categoryID_id=3)
+    accessories_products = Product.objects.filter(categoryID_id=4)
+
     context = {
         'ObjDTCategory': DTCategory,
         'ObjDTProductDetail': DTProductDetail,
         'ObjDTProductDetailInfo': DTProductDetailInfo,
         'ObjDTProductDetailImage': DTProductDetailImage,
+        'smartphone_products': smartphone_products,  # <--- new
+        'laptop_products': laptop_products,  # <--- new
+        'camera_products': camera_products,  # <--- new
+        'accessories_products': accessories_products,  # <--- new
+        'product_pk': pk,   # <-- add this
+
     }
     return render(request, 'electro/productDetail.html', context)
 
@@ -89,18 +110,7 @@ def HotDeal(request):
 def Categories(request):
     return render(request, 'electro/categories.html')
 
-# Category specific pages
-def laptop(request):
-    return render(request, 'electro/laptop.html')
 
-def cameras(request):
-    return render(request, 'electro/cameras.html')
-
-def smartphone(request):
-    return render(request, 'electro/smartphone.html')
-
-def accessories(request):
-    return render(request, 'electro/accessories.html')
 
 # Cart functions
 def add_to_cart(request, product_id):
