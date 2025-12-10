@@ -11,8 +11,10 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('blank/', views.blank, name='blank'),
     path('product/', views.product, name='product'),
-    path('productDetail/<int:pk>', views.productDetail, name='productDetail'),
     path('store/', views.store, name='store'),
+
+
+    path('productDetail/<int:pk>', views.productDetail, name='productDetail'),
     path('checkout/', views.checkout, name='checkout'),
     path('HotDeal/', views.HotDeal ,name='HotDeal'),
     path('Categories/', views.Categories ,name='Categories'),

@@ -1,0 +1,15 @@
+{% extends 'electro/base.html' %}
+{% block content %}
+<h2>Products in {{ selected_category.name }}</h2>
+<div class="products">
+    {% for product in ObjDTproduct %}
+        <div class="product">
+            <h3>{{ product.productName }}</h3>
+            <p>Price: {{ product.price }}</p>
+            <a href="{% url 'productDetail' product.id %}">View</a>
+        </div>
+    {% empty %}
+        <p>No products in this category yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}
