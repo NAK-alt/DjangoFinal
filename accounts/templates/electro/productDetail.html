@@ -33,7 +33,7 @@
     <!-- /BREADCRUMB -->
 
     <!-- SECTION -->
-    {% if product_pk == 1 %}
+    {% comment %} {% if product_pk == 1 %}
     <!-- Show section for product ID 1 -->
     {% include 'electro/productSectionSmartphone.html' %} {% elif product_pk == 2 %}
     <!-- Show section for product ID 2 -->
@@ -41,7 +41,9 @@
     {% include 'electro/productSectionAccessories.html' %} {% else %}
     <!-- Default section --> 
     {% include 'electro/productSection.html' %}
-    {% endif %} 
+    {% endif %}  {% endcomment %}
+    {% include dynamic_template %}
+
     <!-- /Section -->
 
     <!-- NEWSLETTER -->

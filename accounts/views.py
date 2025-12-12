@@ -73,7 +73,18 @@ def product(request):
 def productDetail(request, pk):
     DTCategory = Category.objects.all()
     DTProductDetail = get_object_or_404(Product, id=pk)
+
     category_pk = DTProductDetail.categoryID.id
+    category_template_map = {
+        1: 'electro/productSectionSmartphone.html',
+        2: 'electro/productSectionlaptop.html',
+        3: 'electro/productSectionCamera.html',
+        4: 'electro/productSectionAccessories.html',
+    }
+    dynamic_template = category_template_map.get(
+        category_pk,
+        'electro/productSection.html'  # default
+    )
 
     # FIX: only get details for the selected product
     DTProductDetailInfo = ProductDetail.objects.filter(productID=pk).first()
@@ -98,6 +109,7 @@ def productDetail(request, pk):
         'accessories_products': accessories_products,
         'product_pk': pk,
         'category_pk': category_pk,
+        'dynamic_template': dynamic_template,   # <-- important
 
     }
 
