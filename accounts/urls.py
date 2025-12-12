@@ -12,7 +12,7 @@ urlpatterns = [
     path('blank/', views.blank, name='blank'),
     path('product/', views.product, name='product'),
     path('store/', views.store, name='store'),
-
+    path('All/', views.All,name='All'),
 
     path('productDetail/<int:pk>', views.productDetail, name='productDetail'),
     path('checkout/', views.checkout, name='checkout'),
