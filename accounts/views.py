@@ -22,6 +22,24 @@ def index(request):
         'ObjDTCategory': DTCategory
     }
     return render(request, 'electro/index.html', context)
+def All(request):
+    ObjDTCategory = Category.objects.all()
+
+    # Check if user clicked a category
+    selected_category = request.GET.get('category')
+
+    if selected_category:
+        ObjDTproduct = Product.objects.filter(categoryID=selected_category)
+    else:
+        # Default: show all
+        ObjDTproduct = Product.objects.all()
+
+    context = {
+        'ObjDTproduct': ObjDTproduct,
+        'ObjDTCategory': ObjDTCategory,
+    }
+    return render(request, 'electro/All.html', context)
+
 
 def laptop(request):
     ObjDTCategory = Category.objects.all()
