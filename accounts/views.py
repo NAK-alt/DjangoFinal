@@ -73,8 +73,15 @@ def product(request):
 def productDetail(request, pk):
     DTCategory = Category.objects.all()
     DTProductDetail = get_object_or_404(Product, id=pk)
+    category_pk = DTProductDetail.categoryID.id
+
+    # FIX: only get details for the selected product
+    DTProductDetailInfo = ProductDetail.objects.filter(productID=pk).first()
+
+    # FIX: images related to the product
     DTProductDetailImage = ProductDetailImage.objects.filter(productID=pk)
-    DTProductDetailInfo = ProductDetail.objects.filter(productID=pk)
+
+    # Related products (optional)
     smartphone_products = Product.objects.filter(categoryID_id=1)
     laptop_products = Product.objects.filter(categoryID_id=2)
     camera_products = Product.objects.filter(categoryID_id=3)
@@ -85,14 +92,17 @@ def productDetail(request, pk):
         'ObjDTProductDetail': DTProductDetail,
         'ObjDTProductDetailInfo': DTProductDetailInfo,
         'ObjDTProductDetailImage': DTProductDetailImage,
-        'smartphone_products': smartphone_products,  # <--- new
-        'laptop_products': laptop_products,  # <--- new
-        'camera_products': camera_products,  # <--- new
-        'accessories_products': accessories_products,  # <--- new
-        'product_pk': pk,   # <-- add this
+        'smartphone_products': smartphone_products,
+        'laptop_products': laptop_products,
+        'camera_products': camera_products,
+        'accessories_products': accessories_products,
+        'product_pk': pk,
+        'category_pk': category_pk,
 
     }
+
     return render(request, 'electro/productDetail.html', context)
+
 
 # Store page
 def store(request):
