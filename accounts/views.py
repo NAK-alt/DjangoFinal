@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Product, Category, ProductDetail, ProductDetailImage
+from .models import Product, Category, ProductDetail, ProductDetailImage, BillingDetail
+import random # <-- IMPORT THIS
 
 # Simple pages
 def home(request):
@@ -16,9 +17,12 @@ def customer(request):
 def index(request):
     ObjDTproduct = Product.objects.all()
     DTCategory = Category.objects.all()
+    product_list = list(ObjDTproduct)
+    random.shuffle(product_list)
     
     context = {
         'ObjDTproduct': ObjDTproduct,
+        'ObjDTproduct_shuffled': product_list,
         'ObjDTCategory': DTCategory
     }
     return render(request, 'electro/index.html', context)
@@ -139,8 +143,6 @@ def store(request):
     return render(request, 'electro/store.html')
 
 # Checkout page
-def checkout(request):
-    return render(request, 'electro/checkout.html')
 
 # Hot deals page
 def HotDeal(request):
@@ -151,31 +153,37 @@ def Categories(request):
     return render(request, 'electro/categories.html')
 
 
+def checkout(request):
+    return render(request, 'electro/checkout.html')
 
-# Cart functions
+# Cart functionsfrom django.shortcuts import get_object_or_404, redirect
+
 def add_to_cart(request, product_id):
     cart = request.session.get('cart', {})
-    
+
+    # Get the quantity submitted from the form
+    quantity = int(request.POST.get('quantity', 1))  # default to 1 if not provided
+
     if str(product_id) in cart:
-        cart[str(product_id)]['quantity'] += 1
+        cart[str(product_id)]['quantity'] += quantity
         cart[str(product_id)]['total'] = cart[str(product_id)]['quantity'] * cart[str(product_id)]['price']
     else:
         product_obj = get_object_or_404(Product, id=product_id)
         cart[str(product_id)] = {
             'productName': product_obj.productName,
             'price': float(product_obj.price),
-            'quantity': 1,
-            'total': float(product_obj.price),
+            'quantity': quantity,
+            'total': float(product_obj.price) * quantity,
             'image': product_obj.productImage.url if product_obj.productImage else ''
         }
-    
+
     request.session['cart'] = cart
     return redirect('view_cart')
 
 def view_cart(request):
     cart = request.session.get('cart', {})
     total_price = sum(item['price'] * item['quantity'] for item in cart.values())
-    return render(request, 'Ogani/shoping-cart.html', {'cart': cart, 'total_price': total_price})
+    return render(request, 'electro/shoping-cart.html', {'cart': cart, 'total_price': total_price})
 
 def remove_from_cart(request, product_id):
     cart = request.session.get('cart', {})
@@ -186,7 +194,41 @@ def remove_from_cart(request, product_id):
 def checkout_view(request):
     cart = request.session.get('cart', {})
     total_price = sum(item['total'] for item in cart.values())
-    return render(request, 'Ogani/checkout.html', {
+    return render(request, 'electro/checkout.html', {
         'cart': cart,
         'total_price': total_price,
     })
+
+
+def billing_add(request):
+    cart = request.session.get('cart', {})
+    total_price = sum(item['total'] for item in cart.values())
+
+    if request.method == "POST":
+        data = request.POST
+        qr_image = request.FILES.get('qr_code_image')
+
+        billing = BillingDetail(
+            first_name=data['first_name'],
+            last_name=data['last_name'],
+            country=data['country'],
+            address=data['address'],
+            town=data['town'],
+            postcode=data['postcode'],
+            phone=data['phone'],
+            email=data['email'],
+            qr_code_image=qr_image,
+            total=data['total']
+        )
+        billing.save()
+        return redirect('billing_list')
+    
+    return render(request, 'electro/checkout.html', {
+        'cart': cart,
+        'total_price': total_price,
+    })
+
+def billing_list(request):
+    billings = BillingDetail.objects.all()
+    return render(request, 'electro/BillingList.html', {'billings': billings})
+

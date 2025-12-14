@@ -9,47 +9,45 @@
 
 		<title>Electro - HTML Ecommerce Template</title>
 
- 		<!-- Google font -->
-
+		<!-- Google font -->
+		{% include 'electro/Head.html'%}
     </head>
 	<body>
 		<!-- HEADER -->
-
-		<!-- TOP HEADER -->
+		<header>
+			<!-- TOP HEADER -->
 			{% include 'electro/TopHeader.html'%}
-		<!-- /TOP HEADER -->
+			<!-- /TOP HEADER -->
 
-		<!-- MAIN HEADER -->
+			<!-- MAIN HEADER -->
 			{% include 'electro/MainHeader.html'%}
 			
-		<!-- /MAIN HEADER -->
-		 
-		{% include 'electro/Head.html'%}
+			<!-- /MAIN HEADER -->
+		</header>
 		<!-- /HEADER -->
-
+		
 		<!-- NAVIGATION -->
 		{% include 'electro/Navigation.html'%}
+		
 		<!-- /NAVIGATION -->
 
-		<!-- BREADCRUMB -->
-		{% include 'electro/BREADCRUMB.html'%}
-		<!-- /BREADCRUMB -->
-
-		<!-- SECTION -->
-		{% include 'electro/smartphoneSection.html'%}
-		<!-- /SECTION -->
+		<!-- NAVIGATION -->
+		{% include 'electro/shopingcartSection.html'%}
+		
+		<!-- /NAVIGATION -->
 
 		<!-- NEWSLETTER -->
+		
 		{% include 'electro/NewsLetter.html'%}
 		<!-- /NEWSLETTER -->
-
+		
 		<!-- FOOTER -->
+		
 		{% include 'electro/Footer.html'%}
 		<!-- /FOOTER -->
-
+		
 		<!-- jQuery Plugins -->
 		{% include 'electro/jQuery.html'%}
-
-
+		
 	</body>
 </html>

@@ -14,7 +14,7 @@
 
         <div class="products-widget-slick" data-nav="#slick-nav-3">
           <div>
-            {% for product in ObjDTproduct|slice:"0:3" %}
+            {% for product in ObjDTproduct_shuffled|slice:"0:3" %}
             <div class="product-widget">
               <div class="product-img">
                 <img src="{% static product.productImage %}" alt="{{ product.productName }}">
@@ -24,14 +24,14 @@
                 <h3 class="product-name">
                   <a href="{% url 'productDetail' product.id %}">{{ product.productName }}</a>
                 </h3>
-                <h4 class="product-price">{{ product.price }}</h4>
+                <h4 class="product-price">${{ product.price }}</h4>
               </div>
             </div>
             {% endfor %}
           </div>
 
           <div>
-            {% for product in ObjDTproduct|slice:"3:6" %}
+            {% for product in ObjDTproduct_shuffled|slice:"3:6" %}
             <div class="product-widget">
               <div class="product-img">
                 <img src="{% static product.productImage %}" alt="{{ product.productName }}">
@@ -41,7 +41,7 @@
                 <h3 class="product-name">
                   <a href="{% url 'productDetail' product.id %}">{{ product.productName }}</a>
                 </h3>
-                <h4 class="product-price">{{ product.price }}</h4>
+                <h4 class="product-price">${{ product.price }}</h4>
               </div>
             </div>
             {% endfor %}
@@ -49,7 +49,7 @@
         </div>
       </div>
 
-      <!-- ==================== BEST SELLER ==================== -->
+      <!-- ==================== TOP RATED ==================== -->
       <div class="col-md-4 col-xs-6">
         <div class="section-title">
           <h4 class="title">Top Rated</h4>
@@ -60,7 +60,7 @@
 
         <div class="products-widget-slick" data-nav="#slick-nav-4">
           <div>
-            {% for product in ObjDTproduct|slice:"0:3" %}
+            {% for product in ObjDTproduct_shuffled|slice:"6:9" %}
             <div class="product-widget">
               <div class="product-img">
                 <img src="{% static product.productImage %}" alt="{{ product.productName }}">
@@ -70,14 +70,14 @@
                 <h3 class="product-name">
                   <a href="{% url 'productDetail' product.id %}">{{ product.productName }}</a>
                 </h3>
-                <h4 class="product-price">{{ product.price }}</h4>
+                <h4 class="product-price">${{ product.price }}</h4>
               </div>
             </div>
             {% endfor %}
           </div>
 
           <div>
-            {% for product in ObjDTproduct|slice:"3:6" %}
+            {% for product in ObjDTproduct_shuffled|slice:"9:12" %}
             <div class="product-widget">
               <div class="product-img">
                 <img src="{% static product.productImage %}" alt="{{ product.productName }}">
@@ -87,7 +87,7 @@
                 <h3 class="product-name">
                   <a href="{% url 'productDetail' product.id %}">{{ product.productName }}</a>
                 </h3>
-                <h4 class="product-price">{{ product.price }}</h4>
+                <h4 class="product-price">${{ product.price }}</h4>
               </div>
             </div>
             {% endfor %}
@@ -95,7 +95,7 @@
         </div>
       </div>
 
-      <!-- ==================== View ALL ==================== -->
+      <!-- ==================== VIEW ALL ==================== -->
       <div class="col-md-4 col-xs-6">
         <div class="section-title">
           <h4 class="title">View All</h4>
@@ -106,7 +106,7 @@
 
         <div class="products-widget-slick" data-nav="#slick-nav-5">
           <div>
-            {% for product in ObjDTproduct|slice:"0:3" %}
+            {% for product in ObjDTproduct_shuffled|slice:"12:15" %}
             <div class="product-widget">
               <div class="product-img">
                 <img src="{% static product.productImage %}" alt="{{ product.productName }}">
@@ -116,14 +116,14 @@
                 <h3 class="product-name">
                   <a href="{% url 'productDetail' product.id %}">{{ product.productName }}</a>
                 </h3>
-                <h4 class="product-price">{{ product.price }}</h4>
+                <h4 class="product-price">${{ product.price }}</h4>
               </div>
             </div>
             {% endfor %}
           </div>
 
           <div>
-            {% for product in ObjDTproduct|slice:"3:6" %}
+            {% for product in ObjDTproduct_shuffled|slice:"15:18" %}
             <div class="product-widget">
               <div class="product-img">
                 <img src="{% static product.productImage %}" alt="{{ product.productName }}">
@@ -133,7 +133,7 @@
                 <h3 class="product-name">
                   <a href="{% url 'productDetail' product.id %}">{{ product.productName }}</a>
                 </h3>
-                <h4 class="product-price">{{ product.price }}</h4>
+                <h4 class="product-price">${{ product.price }}</h4>
               </div>
             </div>
             {% endfor %}

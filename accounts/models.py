@@ -63,3 +63,19 @@ class ProductDetailImage(models.Model):
     imageDate = models.DateTimeField(auto_now_add=True, null=True)
     def __str__(self):         
         return f'{self.id} - {self.productDetailImageName} - {self.productID.productName}'
+
+
+class BillingDetail(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    country = models.CharField(max_length=100)
+    address = models.CharField(max_length=255)
+    town = models.CharField(max_length=100)
+    postcode = models.CharField(max_length=20)
+    phone = models.CharField(max_length=20)
+    email = models.EmailField()
+    qr_code_image = models.ImageField(upload_to='qrcodes/', null=True, blank=True)
+    total = models.FloatField()
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
