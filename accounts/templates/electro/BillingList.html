@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Electro - Billing List</title>
+    {% include 'electro/Head.html'%}
+    <style>
+      .billing-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 20px;
+      }
+      .billing-container h2 {
+        font-size: 28px;
+        margin-bottom: 30px;
+        color: #333;
+      }
+      .billing-table {
+        width: 100%;
+        border-collapse: collapse;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        background: white;
+      }
+      .billing-table th {
+        background-color: #ff6b6b;
+        color: white;
+        padding: 15px;
+        text-align: left;
+        font-weight: 600;
+      }
+      .billing-table td {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+      }
+      .billing-table tr:hover {
+        background-color: #f9f9f9;
+      }
+      .qr-code {
+        text-align: center;
+      }
+      .qr-code img {
+        max-width: 150px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header>
+      {% include 'electro/TopHeader.html'%} 
+      {% include 'electro/MainHeader.html'%}
+    </header>
+    <!-- /HEADER -->
+
+    <!-- NAVIGATION -->
+    {% include 'electro/Navigation.html'%}
+    <!-- /NAVIGATION -->
+
+    <!-- BILLING LIST -->
+    <div class="billing-container">
+      <h2>Billing List</h2>
+      <table class="billing-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Total</th>
+            <th>Receipt</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for bill in billings %}
+          <tr>
+            <td>{{ bill.first_name }} {{ bill.last_name }}</td>
+            <td>{{ bill.phone }}</td>
+            <td>{{ bill.email }}</td>
+            <td>{{ bill.address }}</td>
+            <td>${{ bill.total }}</td>
+            <td class="qr-code">
+              <img src="{% static bill.qr_code_image %}" alt="QR Code" />
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <!-- /BILLING LIST -->
+
+    <!-- NEWSLETTER -->
+    {% include 'electro/NewsLetter.html'%}
+    <!-- /NEWSLETTER -->
+
+    <!-- FOOTER -->
+    {% include 'electro/Footer.html'%}
+    <!-- /FOOTER -->
+
+    <!-- jQuery Plugins -->
+    {% include 'electro/jQuery.html'%}
+  </body>
+</html>

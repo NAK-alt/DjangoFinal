@@ -35,5 +35,5 @@ admin.site.register(Image)
 admin.site.register(ImageType)
 admin.site.register(ProductDetail)
 admin.site.register(ProductDetailImage)
-
+admin.site.register(BillingDetail)
 
