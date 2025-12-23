@@ -90,7 +90,7 @@
                   {{ product.productName }}
                 </a>
               </h3>
-              <h4 class="product-price">{{ product.price }}</h4>
+              <h4 class="product-price">${{ product.price }}</h4>
             </div>
           </div>
           {% endfor %}
@@ -156,10 +156,7 @@
                   </a>
                 </h3>
 
-                <h4 class="product-price">
-                  {{ product.price }}
-                  <del class="product-old-price">$990.00</del>
-                </h4>
+                <h4 class="product-price">${{ product.price }}</h4>
 
                 <div class="product-rating">
                   <i class="fa fa-star"></i>
