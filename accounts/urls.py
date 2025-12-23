@@ -12,6 +12,7 @@ urlpatterns = [
     path('blank/', views.blank, name='blank'),
     path('product/', views.product, name='product'),
     path('store/', views.store, name='store'),
+    path('HotDeal/', views.HotDeal ,name='HotDeal'),
     path('All/', views.All,name='All'),
 
     path('add_to_cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
@@ -25,7 +26,6 @@ urlpatterns = [
     path('billing_list/', views.billing_list, name='billing_list'),
 
     path('productDetail/<int:pk>', views.productDetail, name='productDetail'),
-    path('HotDeal/', views.HotDeal ,name='HotDeal'),
     path('Categories/', views.Categories ,name='Categories'),
     path('product/', views.product ,name='product'),
     path('laptop/', views.laptop ,name='laptop'),
