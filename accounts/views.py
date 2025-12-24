@@ -92,49 +92,52 @@ def product(request):
 
 
 # Product detail page
-def productDetail(request, pk):
-    DTCategory = Category.objects.all()
-    DTProductDetail = get_object_or_404(Product, id=pk)
 
-    category_pk = DTProductDetail.categoryID.id
+def productDetail(request, pk):
+    # Categories for navbar / menu
+    ObjDTCategory = Category.objects.all()
+
+    # Main product
+    ObjDTProductDetail = get_object_or_404(Product, id=pk)
+
+    # Product extra info (Description, Information, Reviews)
+    ObjDTProductDetailInfo = ProductDetail.objects.filter(
+        productID=ObjDTProductDetail
+    ).first()
+
+    # Product gallery images
+    ObjDTProductDetailImage = ProductDetailImage.objects.filter(
+        productID=ObjDTProductDetail
+    )
+
+    # ✅ Related products (same category, exclude current product)
+    related_products = Product.objects.filter(
+        categoryID=ObjDTProductDetail.categoryID
+    ).exclude(id=pk)[:4]
+
+    # ✅ SAFE dynamic template selection (NEVER None)
     category_template_map = {
         1: 'electro/productSectionSmartphone.html',
         2: 'electro/productSectionlaptop.html',
         3: 'electro/productSectionCamera.html',
         4: 'electro/productSectionAccessories.html',
     }
+
     dynamic_template = category_template_map.get(
-        category_pk,
-        'electro/productSection.html'  # default
+        ObjDTProductDetail.categoryID.id,
+        'electro/productSection.html'  # DEFAULT fallback
     )
 
-    # FIX: only get details for the selected product
-    DTProductDetailInfo = ProductDetail.objects.filter(productID=pk).first()
-
-    # FIX: images related to the product
-    DTProductDetailImage = ProductDetailImage.objects.filter(productID=pk)
-
-    # Related products (optional)
-    smartphone_products = Product.objects.filter(categoryID_id=1)
-    laptop_products = Product.objects.filter(categoryID_id=2)
-    camera_products = Product.objects.filter(categoryID_id=3)
-    accessories_products = Product.objects.filter(categoryID_id=4)
-
     context = {
-        'ObjDTCategory': DTCategory,
-        'ObjDTProductDetail': DTProductDetail,
-        'ObjDTProductDetailInfo': DTProductDetailInfo,
-        'ObjDTProductDetailImage': DTProductDetailImage,
-        'smartphone_products': smartphone_products,
-        'laptop_products': laptop_products,
-        'camera_products': camera_products,
-        'accessories_products': accessories_products,
-        'product_pk': pk,
-        'category_pk': category_pk,
-        'dynamic_template': dynamic_template,   # <-- important
-
+        'ObjDTCategory': ObjDTCategory,
+        'ObjDTProductDetail': ObjDTProductDetail,
+        'ObjDTProductDetailInfo': ObjDTProductDetailInfo,
+        'ObjDTProductDetailImage': ObjDTProductDetailImage,
+        'related_products': related_products,
+        'dynamic_template': dynamic_template,
     }
 
+    # ✅ ALWAYS render a real template
     return render(request, 'electro/productDetail.html', context)
 
 
