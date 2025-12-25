@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.conf import settings
 from .models import Product, Category, ProductDetail, ProductDetailImage, BillingDetail
-import random # <-- IMPORT THIS
+from django.templatetags.static import static
+from django.http import HttpResponse
+import random
+import os
 
-# Simple pages
+# ----------------- Simple pages -----------------
 def home(request):
     return HttpResponse('Home_page')
 
@@ -13,30 +16,44 @@ def products(request):
 def customer(request):
     return HttpResponse('Customer_page')
 
-# Index page
+def blank(request):
+    return render(request, 'electro/blank.html')
+
+def product(request):
+    return render(request, 'electro/product.html')
+
+def store(request):
+    return render(request, 'electro/store.html')
+
+def HotDeal(request):
+    return render(request, 'electro/HotDeal.html')
+
+def Categories(request):
+    return render(request, 'electro/categories.html')
+
+def checkout(request):
+    return render(request, 'electro/checkout.html')
+
+
+# ----------------- Index / Listing pages -----------------
 def index(request):
     ObjDTproduct = Product.objects.all()
     DTCategory = Category.objects.all()
     product_list = list(ObjDTproduct)
     random.shuffle(product_list)
-    
+
     context = {
         'ObjDTproduct': ObjDTproduct,
         'ObjDTproduct_shuffled': product_list,
         'ObjDTCategory': DTCategory
     }
     return render(request, 'electro/index.html', context)
+
+
 def All(request):
     ObjDTCategory = Category.objects.all()
-
-    # Check if user clicked a category
     selected_category = request.GET.get('category')
-
-    if selected_category:
-        ObjDTproduct = Product.objects.filter(categoryID=selected_category)
-    else:
-        # Default: show all
-        ObjDTproduct = Product.objects.all()
+    ObjDTproduct = Product.objects.filter(categoryID=selected_category) if selected_category else Product.objects.all()
 
     context = {
         'ObjDTproduct': ObjDTproduct,
@@ -46,76 +63,37 @@ def All(request):
 
 
 def laptop(request):
-    ObjDTCategory = Category.objects.all()
-    ObjDTproduct = Product.objects.filter(categoryID__categoryName__iexact='Laptop')
-    
-    context = {
-        'ObjDTproduct': ObjDTproduct,
-        'ObjDTCategory': ObjDTCategory,
-    }
-    return render(request, 'electro/laptop.html', context)
+    return _category_filter(request, 'Laptop', 'electro/laptop.html')
+
 def smartphone(request):
-    ObjDTCategory = Category.objects.all()
-    ObjDTproduct = Product.objects.filter(categoryID__categoryName__iexact='smartphone')
-    
-    context = {
-        'ObjDTproduct': ObjDTproduct,
-        'ObjDTCategory': ObjDTCategory,
-    }
-    return render(request, 'electro/smartphone.html', context)
+    return _category_filter(request, 'smartphone', 'electro/smartphone.html')
+
 def cameras(request):
-    ObjDTCategory = Category.objects.all()
-    ObjDTproduct = Product.objects.filter(categoryID__categoryName__iexact='camera')
-    
-    context = {
-        'ObjDTproduct': ObjDTproduct,
-        'ObjDTCategory': ObjDTCategory,
-    }
-    return render(request, 'electro/cameras.html', context)
+    return _category_filter(request, 'camera', 'electro/cameras.html')
+
 def accessories(request):
+    return _category_filter(request, 'accessories', 'electro/accessories.html')
+
+
+def _category_filter(request, category_name, template_name):
     ObjDTCategory = Category.objects.all()
-    ObjDTproduct = Product.objects.filter(categoryID__categoryName__iexact='accessories')
-    
+    ObjDTproduct = Product.objects.filter(categoryID__categoryName__iexact=category_name)
     context = {
         'ObjDTproduct': ObjDTproduct,
         'ObjDTCategory': ObjDTCategory,
     }
-    return render(request, 'electro/accessories.html', context)
-
-# Blank page
-def blank(request):
-    return render(request, 'electro/blank.html')
-
-# Product list page
-def product(request):
-    return render(request, 'electro/product.html')
+    return render(request, template_name, context)
 
 
-# Product detail page
-
+# ----------------- Product Detail -----------------
 def productDetail(request, pk):
-    # Categories for navbar / menu
     ObjDTCategory = Category.objects.all()
-
-    # Main product
     ObjDTProductDetail = get_object_or_404(Product, id=pk)
+    ObjDTProductDetailInfo = ProductDetail.objects.filter(productID=ObjDTProductDetail).first()
+    ObjDTProductDetailImage = ProductDetailImage.objects.filter(productID=ObjDTProductDetail)
 
-    # Product extra info (Description, Information, Reviews)
-    ObjDTProductDetailInfo = ProductDetail.objects.filter(
-        productID=ObjDTProductDetail
-    ).first()
+    related_products = Product.objects.filter(categoryID=ObjDTProductDetail.categoryID).exclude(id=pk)[:4]
 
-    # Product gallery images
-    ObjDTProductDetailImage = ProductDetailImage.objects.filter(
-        productID=ObjDTProductDetail
-    )
-
-    # ✅ Related products (same category, exclude current product)
-    related_products = Product.objects.filter(
-        categoryID=ObjDTProductDetail.categoryID
-    ).exclude(id=pk)[:4]
-
-    # ✅ SAFE dynamic template selection (NEVER None)
     category_template_map = {
         1: 'electro/productSectionSmartphone.html',
         2: 'electro/productSectionlaptop.html',
@@ -125,7 +103,7 @@ def productDetail(request, pk):
 
     dynamic_template = category_template_map.get(
         ObjDTProductDetail.categoryID.id,
-        'electro/productSection.html'  # DEFAULT fallback
+        'electro/productSection.html'
     )
 
     context = {
@@ -137,62 +115,55 @@ def productDetail(request, pk):
         'dynamic_template': dynamic_template,
     }
 
-    # ✅ ALWAYS render a real template
     return render(request, 'electro/productDetail.html', context)
 
 
-# Store page
-def store(request):
-    return render(request, 'electro/store.html')
-
-# Checkout page
-
-# Hot deals page
-def HotDeal(request):
-    return render(request, 'electro/HotDeal.html')
-
-# Categories page
-def Categories(request):
-    return render(request, 'electro/categories.html')
-
-
-def checkout(request):
-    return render(request, 'electro/checkout.html')
-
-# Cart functionsfrom django.shortcuts import get_object_or_404, redirect
-
+# ----------------- Cart Functions -----------------
 def add_to_cart(request, product_id):
     cart = request.session.get('cart', {})
+    quantity = int(request.POST.get('quantity', 1))
+    product = get_object_or_404(Product, id=product_id)
 
-    # Get the quantity submitted from the form
-    quantity = int(request.POST.get('quantity', 1))  # default to 1 if not provided
+    # Use the filename from the database, but assume it lives in static/images/Products/
+    if product.productImage:
+        # This gets just 'filename.jpg' regardless of how it was uploaded
+        filename = os.path.basename(product.productImage.name)
+        image_path = f"images/Products/{filename}"
+    else:
+        image_path = "images/no-image.png"
 
     if str(product_id) in cart:
         cart[str(product_id)]['quantity'] += quantity
         cart[str(product_id)]['total'] = cart[str(product_id)]['quantity'] * cart[str(product_id)]['price']
     else:
-        product_obj = get_object_or_404(Product, id=product_id)
         cart[str(product_id)] = {
-            'productName': product_obj.productName,
-            'price': float(product_obj.price),
+            'productName': product.productName,
+            'price': float(product.price),
             'quantity': quantity,
-            'total': float(product_obj.price) * quantity,
-            'image': product_obj.productImage.url if product_obj.productImage else ''
+            'image': image_path, # Storing "images/Products/filename.jpg"
+            'total': float(product.price) * quantity
         }
 
     request.session['cart'] = cart
+    request.session.modified = True
     return redirect('view_cart')
-
 def view_cart(request):
     cart = request.session.get('cart', {})
-    total_price = sum(item['price'] * item['quantity'] for item in cart.values())
-    return render(request, 'electro/shoping-cart.html', {'cart': cart, 'total_price': total_price})
+    total_price = sum(item['total'] for item in cart.values())
+    return render(request, 'electro/shoping-cart.html', {
+        'cart': cart,
+        'total_price': total_price
+    })
+
 
 def remove_from_cart(request, product_id):
     cart = request.session.get('cart', {})
-    cart.pop(str(product_id), None)
+    if str(product_id) in cart:
+        del cart[str(product_id)]
     request.session['cart'] = cart
+    request.session.modified = True
     return redirect('view_cart')
+
 
 def checkout_view(request):
     cart = request.session.get('cart', {})
@@ -203,6 +174,7 @@ def checkout_view(request):
     })
 
 
+# ----------------- Billing -----------------
 def billing_add(request):
     cart = request.session.get('cart', {})
     total_price = sum(item['total'] for item in cart.values())
@@ -225,13 +197,13 @@ def billing_add(request):
         )
         billing.save()
         return redirect('billing_list')
-    
+
     return render(request, 'electro/checkout.html', {
         'cart': cart,
         'total_price': total_price,
     })
 
+
 def billing_list(request):
     billings = BillingDetail.objects.all()
     return render(request, 'electro/BillingList.html', {'billings': billings})
-

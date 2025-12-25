@@ -1,145 +1,38 @@
 {% load static %}
 
-<style>
-  /* ===== CART LAYOUT ===== */
-  .cart-wrapper {
-    background: #ffffff;
-    border-radius: 14px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    padding: 25px;
-    margin-bottom: 30px;
-  }
-
-  .shopping-cart {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  .shopping-cart thead th {
-    background: #f8f9fa;
-    padding: 14px;
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: #666;
-    border-bottom: 2px solid #eee;
-  }
-
-  .shopping-cart tbody tr {
-    border-bottom: 1px solid #eee;
-  }
-
-  .shopping-cart td {
-    padding: 16px 10px;
-    vertical-align: middle;
-  }
-
-  /* ===== PRODUCT COLUMN ===== */
-  .shopping__cart__item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-
-  .shopping__cart__item img {
-    width: 80px;
-    border-radius: 8px;
-    border: 1px solid #eee;
-  }
-
-  .shopping__cart__item h5 {
-    font-size: 15px;
-    margin: 0;
-    font-weight: 600;
-    color: #333;
-  }
-
-  /* ===== PRICE ===== */
-  .shopping__cart__price {
-    font-weight: 600;
-    color: #444;
-  }
-
-  /* ===== QUANTITY ===== */
-  .quantity-input {
-    width: 65px;
-    height: 38px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    text-align: center;
-    font-size: 14px;
-  }
-
-  /* ===== TOTAL ===== */
-  .shopping__cart__total {
-    font-weight: 700;
-    color: #111;
-  }
-
-  /* ===== REMOVE BUTTON ===== */
-  .remove-item {
-    color: #e74c3c;
-    font-size: 18px;
-    text-decoration: none;
-  }
-
-  .remove-item:hover {
-    color: #c0392b;
-  }
-
-  /* ===== SUMMARY ===== */
-  .cart-summary {
-    background: #ffffff;
-    border-radius: 14px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    padding: 25px;
-  }
-
-  .cart-summary h5 {
-    font-weight: 700;
-    margin-bottom: 20px;
-  }
-
-  .cart-summary ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  .cart-summary li {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    font-size: 15px;
-  }
-
-  .cart-summary .total {
-    font-size: 18px;
-    font-weight: 800;
-  }
-
-  /* ===== BUTTON ===== */
-  .primary-btn {
-    display: block;
-    width: 100%;
-    text-align: center;
-    background: #111;
-    color: #fff;
-    padding: 14px;
-    border-radius: 10px;
-    margin-top: 20px;
-    text-decoration: none;
-    font-weight: 600;
-  }
-
-  .primary-btn:hover {
-    background: #333;
-  }
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shopping Cart</title>
+  <style>
+    body { background: #f5f6fa; font-family: Arial, sans-serif; }
+    .cart-wrapper, .cart-summary { background: #fff; border-radius: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); padding: 25px; margin-bottom: 30px; }
+    .shopping-cart { width: 100%; border-collapse: collapse; }
+    .shopping-cart thead th { background: #f8f9fa; padding: 14px; font-size: 13px; text-transform: uppercase; color: #666; border-bottom: 2px solid #eee; text-align: left; }
+    .shopping-cart td { padding: 16px 10px; vertical-align: middle; border-bottom: 1px solid #eee; }
+    .shopping__cart__item { display: flex; align-items: center; gap: 15px; }
+    .shopping__cart__item img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid #eee; background: #fafafa; }
+    .shopping__cart__item h5 { font-size: 15px; margin: 0; font-weight: 600; color: #333; }
+    .shopping__cart__price, .shopping__cart__total { font-weight: 600; color: #444; }
+    .quantity-input { width: 65px; height: 38px; border-radius: 8px; border: 1px solid #ddd; text-align: center; }
+    .remove-item { color: #e74c3c; font-size: 18px; text-decoration: none; }
+    .remove-item:hover { color: #c0392b; }
+    .cart-summary h5 { font-weight: 700; margin-bottom: 20px; }
+    .cart-summary ul { list-style: none; padding: 0; }
+    .cart-summary li { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 15px; }
+    .cart-summary .total { font-size: 18px; font-weight: 800; }
+    .primary-btn { display: block; width: 100%; background: #111; color: #fff; padding: 14px; border-radius: 10px; text-align: center; text-decoration: none; font-weight: 600; margin-top: 20px; }
+    .primary-btn:hover { background: #333; }
+  </style>
+</head>
+<body>
 
 <div class="container">
-  <div class="row justify-content-end">
+  <div class="row" style="display:flex; gap:30px; justify-content:center;">
+
     <!-- CART TABLE -->
-    <div class="col-lg-8">
+    <div style="width:65%;">
       <div class="cart-wrapper">
         <table class="shopping-cart">
           <thead>
@@ -151,43 +44,37 @@
               <th></th>
             </tr>
           </thead>
-
           <tbody>
             {% for id, item in cart.items %}
             <tr>
               <td>
-                <div class="shopping__cart__item">
-                  <img
-                    src="{% static item.image %}"
-                    alt="{{ item.productName }}"
-                  />
-                  <h5>{{ item.productName }}</h5>
-                </div>
-              </td>
+  <div class="shopping__cart__item">
+    {% if item.image %}
+        <img src="{% static item.image %}" alt="{{ item.productName }}"
+             onerror="this.onerror=null;this.src='{% static 'images/no-image.png' %}';">
+    {% else %}
+        <img src="{% static 'images/no-image.png' %}" alt="No Image">
+    {% endif %}
+    <h5>{{ item.productName }}</h5>
+</div>
+</td>
 
-              <td class="shopping__cart__price">
-                ${{ item.price|floatformat:2 }}
-              </td>
-
-              <td>
-                <input
-                  type="number"
-                  min="1"
-                  value="{{ item.quantity }}"
-                  class="quantity-input"
-                  onchange="updateTotal(this, {{ item.price|floatformat:2 }}, '{{ id }}')"
-                />
-              </td>
-
-              <td class="shopping__cart__total" id="total-{{ id }}">
-                ${{ item.total|floatformat:2 }}
-              </td>
+              <td class="shopping__cart__price">${{ item.price|floatformat:2 }}</td>
 
               <td>
-                <a href="{% url 'remove_from_cart' id %}" class="remove-item"
-                  >✕</a
-                >
+                <input type="number" min="1" value="{{ item.quantity }}" class="quantity-input"
+                       onchange="updateTotal(this, {{ item.price }}, '{{ id }}')"/>
               </td>
+
+              <td class="shopping__cart__total" id="total-{{ id }}">${{ item.total|floatformat:2 }}</td>
+
+              <td>
+                <a href="{% url 'remove_from_cart' id %}" class="remove-item">✕</a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="5" style="text-align:center; padding:30px;">Your cart is empty</td>
             </tr>
             {% endfor %}
           </tbody>
@@ -196,41 +83,34 @@
     </div>
 
     <!-- SUMMARY -->
-    <div class="col-lg-4">
+    <div style="width:30%;">
       <div class="cart-summary">
         <h5>Cart Summary</h5>
         <ul>
-          <li>
-            Subtotal
-            <span id="subtotal">${{ total_price|floatformat:2 }}</span>
-          </li>
-          <li class="total">
-            Total
-            <span id="total">${{ total_price|floatformat:2 }}</span>
-          </li>
+          <li>Subtotal <span id="subtotal">${{ total_price|floatformat:2 }}</span></li>
+          <li class="total">Total <span id="total">${{ total_price|floatformat:2 }}</span></li>
         </ul>
-
-        <a href="{% url 'checkout_view' %}" class="primary-btn">
-          Proceed to Checkout
-        </a>
+        <a href="{% url 'checkout_view' %}" class="primary-btn">Proceed to Checkout</a>
       </div>
     </div>
+
   </div>
 </div>
 
 <script>
-  function updateTotal(quantityInput, price, itemId) {
-    const quantity = quantityInput.value;
-    const total = (quantity * price).toFixed(2);
-
-    document.getElementById("total-" + itemId).innerText = "$" + total;
+  function updateTotal(input, price, id) {
+    const qty = parseInt(input.value) || 1;
+    const itemTotal = (qty * price).toFixed(2);
+    document.getElementById("total-" + id).innerText = "$" + itemTotal;
 
     let subtotal = 0;
-    document.querySelectorAll(".shopping__cart__total").forEach((el) => {
-      subtotal += parseFloat(el.innerText.replace("$", ""));
+    document.querySelectorAll(".shopping__cart__total").forEach(el => {
+      subtotal += parseFloat(el.innerText.replace("$","")) || 0;
     });
-
     document.getElementById("subtotal").innerText = "$" + subtotal.toFixed(2);
     document.getElementById("total").innerText = "$" + subtotal.toFixed(2);
   }
 </script>
+
+</body>
+</html>
