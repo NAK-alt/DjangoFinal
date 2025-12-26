@@ -33,6 +33,8 @@ def Categories(request):
 
 def checkout(request):
     return render(request, 'electro/checkout.html')
+def Blog(request):
+    return render(request, 'electro/Blog.html')
 
 
 # ----------------- Index / Listing pages -----------------

@@ -1,0 +1,167 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Electro - Blog</title>
+    {% include 'electro/Head.html'%}
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header>{% include 'electro/MainHeader.html'%}</header>
+    <!-- /HEADER -->
+
+    <!-- NAVIGATION -->
+    {% include 'electro/Navigation.html'%}
+    <!-- /NAVIGATION -->
+
+    <!-- BLOG SECTION -->
+    <section class="blog-section">
+      <div class="container">
+        <div class="row">
+          <!-- MAIN CONTENT -->
+          <div class="col-md-8">
+            <article class="article">
+              
+
+              <h1>The Latest Gadgets and Tech Trends in 2024</h1>
+              <div class="article-meta">
+                <span class="date"
+                  ><i class="fa fa-calendar"></i> March 15, 2024</span
+                >
+                <span class="author"
+                  ><i class="fa fa-user"></i> by TechWriter</span
+                >
+                <span class="category"
+                  ><i class="fa fa-tag"></i> Technology</span
+                >
+              </div>
+
+              <p>
+                The electronics industry continues to evolve at a rapid pace.
+                From cutting-edge smartphones to AI-powered devices, 2024 brings
+                exciting innovations. Smart home technology is becoming more
+                accessible, with affordable options for automated lighting,
+                security systems, and climate control.
+              </p>
+
+              <h3>Key Highlights</h3>
+              <ul class="highlights">
+                <li>
+                  <strong>Wearables:</strong> Advanced health monitoring with
+                  ECG readings
+                </li>
+                <li>
+                  <strong>Audio:</strong> Superior noise cancellation technology
+                </li>
+                <li>
+                  <strong>Smart Home:</strong> Affordable automation solutions
+                </li>
+                <li>
+                  <strong>Displays:</strong> High refresh rate gaming monitors &
+                  OLED screens
+                </li>
+              </ul>
+
+              <h3>Smartphone Innovations</h3>
+              <p>
+                Flagship smartphones now feature advanced computational
+                photography, improved battery efficiency, and faster processors.
+                Premium models include foldable designs and enhanced camera
+                systems with up to 200MP sensors.
+              </p>
+
+              <h3>Wearable Technology Growth</h3>
+              <p>
+                Smartwatches now offer advanced health monitoring, including
+                blood oxygen levels and ECG readings. Wireless earbuds provide
+                superior noise cancellation and longer battery life. Fitness
+                trackers integrate seamlessly with health apps for comprehensive
+                wellness tracking.
+              </p>
+
+              <h3>Smart Home Ecosystem</h3>
+              <p>
+                Voice assistants continue to improve, with better natural
+                language processing. Smart thermostats learn your habits,
+                security cameras offer advanced AI detection, and lighting
+                systems adapt to your circadian rhythm.
+              </p>
+
+              <h3>Gaming & Performance</h3>
+              <p>
+                Gaming laptops now feature RTX 4090 graphics cards, high refresh
+                rate displays (240Hz+), and advanced cooling systems. Mechanical
+                keyboards and gaming mice offer customization and durability for
+                competitive gaming.
+              </p>
+
+              <p>
+                If you're looking to upgrade your electronics collection, now is
+                an excellent time to explore the latest products and find great
+                deals on quality gadgets.
+              </p>
+
+              <a href="#" class="btn btn-primary btn-lg">Read Full Article</a>
+            </article>
+          </div>
+
+          <!-- SIDEBAR -->
+          <div class="col-md-4">
+            <aside class="sidebar">
+              <div class="widget widget-featured">
+                <h3><i class="fa fa-star"></i> Featured Products</h3>
+                <ul class="featured-products">
+                  <li><a href="#">Latest Flagship Smartphones</a></li>
+                  <li><a href="#">Premium Wireless Earbuds</a></li>
+                  <li><a href="#">Gaming Laptops</a></li>
+                </ul>
+              </div>
+
+              <div class="widget">
+                <h3><i class="fa fa-clock-o"></i> Recent Posts</h3>
+                <ul class="recent-posts">
+                  <li><a href="#">5 Must-Have Smartphone Accessories</a></li>
+                  <li><a href="#">Gaming Laptop Buying Guide</a></li>
+                  <li><a href="#">Wireless Audio Comparison</a></li>
+                  <li><a href="#">Smart Home Setup Essentials</a></li>
+                </ul>
+              </div>
+
+              <div class="widget">
+                <h3><i class="fa fa-list"></i> Categories</h3>
+                <ul class="categories">
+                  <li><a href="{% url 'smartphone' %}">Smartphones</a></li>
+                  <li><a href="{% url 'laptop' %}">Laptops</a></li>
+                  <li><a href="{% url 'cameras' %}">Cameras</a></li>
+                  <li><a href="{% url 'accessories' %}">Accessories</a></li>
+                  <li><a href="#">Wearables</a></li>
+                  <li><a href="#">Smart Home</a></li>
+                </ul>
+              </div>
+
+              <div class="widget widget-promo">
+                <h3>Special Offer</h3>
+                <p>
+                  <strong>Get 20% OFF</strong> on selected electronics this
+                  month!
+                </p>
+                <a href="#" class="btn btn-sm btn-danger">Shop Now</a>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /BLOG SECTION -->
+
+    <!-- FOOTER -->
+    {% include 'electro/Footer.html'%}
+    <!-- /FOOTER -->
+
+    <!-- jQuery Plugins -->
+    {% include 'electro/jQuery.html'%}
+  </body>
+</html>
