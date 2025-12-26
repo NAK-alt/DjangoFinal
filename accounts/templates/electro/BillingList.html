@@ -82,8 +82,13 @@
             <td>{{ bill.address }}</td>
             <td>${{ bill.total }}</td>
             <td class="qr-code">
-              <img src="{% static bill.qr_code_image %}" alt="QR Code" />
-            </td>
+  {% if bill.qr_code_image %}
+    <img src="{{ bill.qr_code_image.url }}" alt="Receipt">
+  {% else %}
+    No receipt
+  {% endif %}
+</td>
+
           </tr>
           {% endfor %}
         </tbody>
