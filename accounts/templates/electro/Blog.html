@@ -7,6 +7,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Electro - Blog</title>
     {% include 'electro/Head.html'%}
+    <style>
+      body {
+        background-color: #000;
+        color: #fff;
+      }
+      .blog-section {
+        background-color: #ffffffff;
+        padding: 40px 0;
+      }
+      .article {
+        background-color: #1a1a1a;
+        padding: 30px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+      }
+      .article h1 {
+        color: #fff;
+        margin: 20px 0;
+        font-size: 32px;
+      }
+      .article h3 {
+        color: #fff;
+        margin-top: 25px;
+      }
+      .article p {
+        line-height: 1.8;
+        color: #ccc;
+      }
+      .article-meta {
+        color: #999;
+        font-size: 14px;
+        margin: 10px 0 20px 0;
+      }
+      .article-image {
+        max-width: 100%;
+        height: auto;
+        margin: 20px 0;
+        border-radius: 5px;
+      }
+      .sidebar {
+        padding-left: 20px;
+      }
+      .widget {
+        background-color: #1a1a1a;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+      }
+      .widget h3 {
+        color: #fff;
+        margin-bottom: 15px;
+      }
+      .widget ul {
+        list-style: none;
+        padding: 0;
+      }
+      .widget ul li {
+        margin: 10px 0;
+      }
+      .widget a {
+        color: #0066cc;
+        text-decoration: none;
+      }
+      .widget a:hover {
+        color: #0052a3;
+      }
+    </style>
   </head>
   <body>
     <!-- HEADER -->
@@ -24,87 +91,85 @@
           <!-- MAIN CONTENT -->
           <div class="col-md-8">
             <article class="article">
-              
+              <a href="{% url 'index' %}" class="logo">
+                <img
+                  src="{% static 'img/logo.png' %}"
+                  alt="Logo"
+                  style="max-width: 80px"
+                />
+              </a>
 
-              <h1>The Latest Gadgets and Tech Trends in 2024</h1>
+              <h1>About Us</h1>
               <div class="article-meta">
                 <span class="date"
-                  ><i class="fa fa-calendar"></i> March 15, 2024</span
+                  ><i class="fa fa-calendar"></i> Established 2018</span
                 >
                 <span class="author"
-                  ><i class="fa fa-user"></i> by TechWriter</span
+                  ><i class="fa fa-user"></i> Electro Team</span
                 >
-                <span class="category"
-                  ><i class="fa fa-tag"></i> Technology</span
-                >
+                <span class="category"><i class="fa fa-tag"></i> About</span>
               </div>
 
               <p>
-                The electronics industry continues to evolve at a rapid pace.
-                From cutting-edge smartphones to AI-powered devices, 2024 brings
-                exciting innovations. Smart home technology is becoming more
-                accessible, with affordable options for automated lighting,
-                security systems, and climate control.
+                Welcome to Electro, your premier destination for cutting-edge
+                electronics and innovative gadgets. Founded in 2018, we've been
+                committed to bringing the latest technology trends and premium
+                products to tech enthusiasts worldwide.
               </p>
 
-              <h3>Key Highlights</h3>
+              <h3>Our Mission</h3>
+              <p>
+                At Electro, we believe that technology should be accessible to
+                everyone. Our mission is to provide high-quality electronics,
+                expert reviews, and comprehensive guides to help you make
+                informed purchasing decisions.
+              </p>
+
+              <h3>What We Offer</h3>
               <ul class="highlights">
                 <li>
-                  <strong>Wearables:</strong> Advanced health monitoring with
-                  ECG readings
+                  <strong>Product Reviews:</strong> In-depth analysis of the
+                  latest gadgets and devices
                 </li>
                 <li>
-                  <strong>Audio:</strong> Superior noise cancellation technology
+                  <strong>Buying Guides:</strong> Expert recommendations for
+                  every budget
                 </li>
                 <li>
-                  <strong>Smart Home:</strong> Affordable automation solutions
+                  <strong>Tech News:</strong> Stay updated with industry trends
+                  and announcements
                 </li>
                 <li>
-                  <strong>Displays:</strong> High refresh rate gaming monitors &
-                  OLED screens
+                  <strong>Community Support:</strong> Connect with fellow tech
+                  enthusiasts
                 </li>
               </ul>
 
-              <h3>Smartphone Innovations</h3>
+              <h3>Our Expertise</h3>
               <p>
-                Flagship smartphones now feature advanced computational
-                photography, improved battery efficiency, and faster processors.
-                Premium models include foldable designs and enhanced camera
-                systems with up to 200MP sensors.
+                With over 6 years of industry experience, our team consists of
+                technology experts, product specialists, and passionate
+                reviewers. We've helped thousands of customers find the perfect
+                electronics for their needs.
               </p>
 
-              <h3>Wearable Technology Growth</h3>
+              <h3>Quality Assurance</h3>
               <p>
-                Smartwatches now offer advanced health monitoring, including
-                blood oxygen levels and ECG readings. Wireless earbuds provide
-                superior noise cancellation and longer battery life. Fitness
-                trackers integrate seamlessly with health apps for comprehensive
-                wellness tracking.
+                Every product recommendation on our platform undergoes rigorous
+                testing and evaluation. We partner with leading manufacturers to
+                ensure authenticity and provide competitive pricing for our
+                valued customers.
               </p>
 
-              <h3>Smart Home Ecosystem</h3>
+              <h3>Customer Commitment</h3>
               <p>
-                Voice assistants continue to improve, with better natural
-                language processing. Smart thermostats learn your habits,
-                security cameras offer advanced AI detection, and lighting
-                systems adapt to your circadian rhythm.
+                Your satisfaction is our priority. We offer 24/7 customer
+                support, hassle-free returns, and warranty coverage on all
+                products. Join thousands of satisfied customers who trust
+                Electro for their electronics needs.
               </p>
 
-              <h3>Gaming & Performance</h3>
-              <p>
-                Gaming laptops now feature RTX 4090 graphics cards, high refresh
-                rate displays (240Hz+), and advanced cooling systems. Mechanical
-                keyboards and gaming mice offer customization and durability for
-                competitive gaming.
-              </p>
-
-              <p>
-                If you're looking to upgrade your electronics collection, now is
-                an excellent time to explore the latest products and find great
-                deals on quality gadgets.
-              </p>
-
-              <a href="#" class="btn btn-primary btn-lg">Read Full Article</a>
+              <a href="#" class="btn btn-primary btn-lg">Shop Now</a>
             </article>
           </div>
 
@@ -137,7 +202,6 @@
                   <li><a href="{% url 'laptop' %}">Laptops</a></li>
                   <li><a href="{% url 'cameras' %}">Cameras</a></li>
                   <li><a href="{% url 'accessories' %}">Accessories</a></li>
-
                 </ul>
               </div>
 
